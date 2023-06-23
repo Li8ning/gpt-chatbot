@@ -1,8 +1,8 @@
-const chatContainer = document.getElementById('chat-container');
-const userInput = document.getElementById('user-input');
-const sendButton = document.getElementById('send-button');
-const pleaseWaitMessage = document.getElementById('please-wait-message');
-const downloadLink = document.getElementById('download-link');
+const chatContainer = document.getElementById('gpt-chat-container');
+const userInput = document.getElementById('gpt-user-input');
+const sendButton = document.getElementById('gpt-send-button');
+const pleaseWaitMessage = document.getElementById('gpt-please-wait-message');
+const downloadLink = document.getElementById('gpt-download-link');
 
 // Event listener for pressing Enter key
 userInput.onkeydown = function (event) {
@@ -16,7 +16,7 @@ async function sendMessage() {
     const message = userInput.value;
     if (message.trim() === '') return;
 
-    appendMessage(message, 'user-message');
+    appendMessage(message, 'gpt-user-message');
     userInput.value = '';
 
     pleaseWaitMessage.style.display = 'block';
@@ -45,7 +45,7 @@ async function sendMessage() {
 
 function appendMessage(message, className) {
     const messageElement = document.createElement('div');
-    messageElement.classList.add('message');
+    messageElement.classList.add('gpt-message');
     messageElement.classList.add(className);
     messageElement.textContent = message;
     chatContainer.appendChild(messageElement);
@@ -53,5 +53,5 @@ function appendMessage(message, className) {
 }
 
 function displayBotReply(botReply) {
-    appendMessage(botReply, 'bot-message');
+    appendMessage(botReply, 'gpt-bot-message');
 }
