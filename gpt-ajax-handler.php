@@ -25,12 +25,17 @@ function gpt_chatbot_send_message() {
 		wp_send_json_error( 'Invalid request.' );
 	}
 
-	// Set up the OpenAI API credentials.
-	// Retrieve the secret key.
-	$openai_api_key = get_option( 'gpt_chatbot_secret_key', '' );
+	// Retrieve the gpt chatbot completions configurations.
+	$gpt_chatbot_completions_config = get_option( 'gpt_chatbot_completions_config', '' );
+
+	$gpt_chatbot_completions_config_array = json_decode( $gpt_chatbot_completions_config );
+	$secret_key                           = isset( $gpt_chatbot_completions_config_array->secret_key ) ? $gpt_chatbot_completions_config_array->secret_key : '';
+	$gpt_model                            = ! empty( $gpt_chatbot_completions_config_array->model ) ? $gpt_chatbot_completions_config_array->model : 'gpt-3.5-turbo';
+	$gpt_temperature                      = ! empty( $gpt_chatbot_completions_config_array->temperature ) ? $gpt_chatbot_completions_config_array->temperature : 0.2;
+	$gpt_max_tokens                       = ! empty( $gpt_chatbot_completions_config_array->max_tokens ) ? $gpt_chatbot_completions_config_array->max_tokens : 250;
 
 	// Check if the required data is received.
-	if ( empty( $openai_api_key ) ) {
+	if ( empty( $secret_key ) ) {
 		wp_send_json_error( 'API Key not set' );
 	}
 
@@ -43,19 +48,20 @@ function gpt_chatbot_send_message() {
 	// Set the request headers.
 	$headers = array(
 		'Content-Type'  => 'application/json',
-		'Authorization' => 'Bearer ' . $openai_api_key,
+		'Authorization' => 'Bearer ' . $secret_key,
 	);
 
 	// Set the request data.
 	$data = array(
-		'model'      => 'gpt-3.5-turbo',
-		'messages'   => array(
+		'model'       => $gpt_model,
+		'messages'    => array(
 			array(
-				'role'    => 'system',
+				'role'    => 'user',
 				'content' => $message,
 			),
 		),
-		'max_tokens' => 250,
+		'max_tokens'  => $gpt_max_tokens,
+		'temperature' => $gpt_temperature,
 	);
 
 	// Send the request to the OpenAI API.

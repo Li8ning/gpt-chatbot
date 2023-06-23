@@ -1,7 +1,16 @@
 const chatContainer = document.getElementById('chat-container');
 const userInput = document.getElementById('user-input');
+const sendButton = document.getElementById('send-button');
 const pleaseWaitMessage = document.getElementById('please-wait-message');
 const downloadLink = document.getElementById('download-link');
+
+// Event listener for pressing Enter key
+userInput.onkeydown = function (event) {
+    if (event.keyCode === 13) {
+        event.preventDefault();
+        sendButton.click();
+    }
+}
 
 async function sendMessage() {
     const message = userInput.value;
@@ -20,14 +29,14 @@ async function sendMessage() {
             action: 'gpt_chatbot_send_message',
             message: message
         },
-        success: function(response) {
+        success: function (response) {
             // Display AI response in chat window
             pleaseWaitMessage.style.display = 'none';
-            displayBotReply( response.data );
-            downloadLink.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent( response.data );
+            displayBotReply(response.data);
+            downloadLink.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent(response.data);
             downloadLink.style.display = 'block';
         },
-        error: function() {
+        error: function () {
             // Handle error response from the API
             console.log('An error occurred while communicating with the AI.', 'error');
         }
