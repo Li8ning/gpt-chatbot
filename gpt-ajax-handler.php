@@ -70,6 +70,7 @@ function gpt_chatbot_send_message() {
 		array(
 			'headers' => $headers,
 			'body'    => wp_json_encode( $data ),
+			'timeout' => 0,
 		)
 	);
 

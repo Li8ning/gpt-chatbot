@@ -119,7 +119,7 @@ function gpt_chatbot_plugin_settings() {
 				<input type="text" id="gpt_chatbot_model_name" name="gpt_chatbot_model_name" required value="' . esc_attr( ! empty( $gpt_model ) ? $gpt_model : '' ) . '">
 				<label for="gpt_chatbot_temperature">' . esc_html__( 'Temperature:', 'gpt-chatbot' ) . '</label>
 				<input type="number" step="0.01" min="0" max="2" id="gpt_chatbot_temperature" name="gpt_chatbot_temperature" value="' . esc_attr( ! empty( $gpt_temperature ) ? $gpt_temperature : '' ) . '">
-				<label for="gpt_chatbot_max_tokens">x' . esc_html__( 'Temperature:', 'gpt-chatbot' ) . '</label>
+				<label for="gpt_chatbot_max_tokens">' . esc_html__( 'Max Tokens:', 'gpt-chatbot' ) . '</label>
 				<input type="number" id="gpt_chatbot_max_tokens" name="gpt_chatbot_max_tokens" value="' . esc_attr( ! empty( $gpt_max_tokens ) ? $gpt_max_tokens : '' ) . '">';
 	$html .= wp_nonce_field( 'gpt_chatbot_plugin_settings', 'gpt_chatbot_plugin_nonce' );
 	$html .= '<p class="submit">
